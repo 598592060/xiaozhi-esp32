@@ -19,7 +19,7 @@
 #include <driver/i2c_master.h>
 #include <esp_lcd_panel_vendor.h>
 #include <driver/spi_common.h>
-
+#include "tm1650.h"
  
 #define TAG "FanchengWifiBoardLCD"
 
@@ -108,6 +108,9 @@ public:
         InitializeButtons();
         InitializeIot();
         GetBacklight()->RestoreBrightness();
+        ESP_LOGI(TAG, "Initialize TM1650");
+        TM1650_init();
+        //TM1650_print_number(1234, true);
     }
 
     virtual AudioCodec* GetAudioCodec() override {

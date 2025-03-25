@@ -540,8 +540,14 @@ void Application::Start() {
     esp_timer_start_periodic(clock_timer_handle_, 1000000);
 }
 
+extern "C" void TM1650_display_time(uint8_t hours, uint8_t minutes);
+time_t nowtime;
+struct tm* tm_info;
 void Application::OnClockTimer() {
     clock_ticks_++;
+    nowtime = time(NULL);
+    tm_info = localtime(&nowtime);
+    TM1650_display_time(tm_info->tm_hour, tm_info->tm_min);
 
     // Print the debug info every 10 seconds
     if (clock_ticks_ % 10 == 0) {
